@@ -7,7 +7,7 @@ import javax.persistence.*;
 public abstract class AbstractEntity {
 
     @Id
-    @Column(name = "CTGR_ID")
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CTGR_ID_GEN")
     @SequenceGenerator(name = "CTGR_ID_GEN", sequenceName = "CTGR_ID_SEQ", allocationSize = 1)
     private Long id;

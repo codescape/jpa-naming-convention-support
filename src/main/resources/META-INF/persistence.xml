@@ -7,7 +7,7 @@
         <properties>
             <property name="eclipselink.logging.level" value="WARNING"/>
             <property name="eclipselink.weaving" value="static"/>
-            <property name="eclipselink.ddl-generation" value="validate"/>
+            <property name="eclipselink.session.customizer" value="jpa.namingsupport.AliasCustomizer" />
         </properties>
     </persistence-unit>
 </persistence>

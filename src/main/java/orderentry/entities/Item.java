@@ -25,7 +25,7 @@ public class Item {
     @Column(name = "ITEM_PRICE")
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "ITEM_CTGR_ID")
     private Category category;
 
