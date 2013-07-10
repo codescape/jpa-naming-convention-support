@@ -12,11 +12,11 @@ import javax.persistence.*;
 public class Category extends AbstractEntity {
 
     @Basic(optional = false)
-    @Column(name = "CTGR_NAME")
+    @Column(name = "NAME")
     private String name;
 
     @Basic
-    @Column(name = "CTGR_DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     private String description;
 
     public Category() {

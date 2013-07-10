@@ -13,7 +13,7 @@ public abstract class AbstractEntity {
     private Long id;
 
     @Version
-    @Column(name = "CTGR_VERSION")
+    @Column(name = "VERSION")
     private Long version;
 
     protected AbstractEntity(Long id, Long version) {
