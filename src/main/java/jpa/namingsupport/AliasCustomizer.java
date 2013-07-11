@@ -29,7 +29,9 @@ public class AliasCustomizer implements SessionCustomizer {
 
     private void updateFieldName(String alias, DatabaseMapping fieldMapping) {
         DatabaseField field = fieldMapping.getField();
-        field.setName(alias + "_" + field.getName());
+        if (field != null) {
+            field.setName(alias + "_" + field.getName());
+        }
     }
 
 }
