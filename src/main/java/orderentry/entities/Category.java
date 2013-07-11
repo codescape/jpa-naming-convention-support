@@ -3,9 +3,10 @@ package orderentry.entities;
 import jpa.namingsupport.AbstractEntity;
 import jpa.namingsupport.Alias;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@SuppressWarnings("UnusedDeclaration")
 @Entity
 @Table(name = "CATEGORIES")
 @Alias(name = "CTGR")
@@ -14,7 +15,6 @@ public class Category extends AbstractEntity {
     @Basic(optional = false)
     private String name;
 
-    @Basic
     private String description;
 
     public Category() {

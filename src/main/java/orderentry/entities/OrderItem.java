@@ -1,20 +1,21 @@
 package orderentry.entities;
 
+import jpa.namingsupport.Alias;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "ORDER_ITEMS")
+@Alias(name = "ORIT")
 public class OrderItem implements Serializable {
 
     @Id
-    @Column(name = "ORIT_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORIT_ID_GEN")
     @SequenceGenerator(name = "ORIT_ID_GEN", sequenceName = "ORIT_ID_SEQ")
     private Long id;
 
     @Version
-    @Column(name = "ORIT_VERSION")
     private Long version;
 
     @ManyToOne
@@ -25,8 +26,6 @@ public class OrderItem implements Serializable {
     @JoinColumn(name = "ORIT_ITEM_ID")
     private Item item;
 
-    @Basic
-    @Column(name = "ORIT_QUANTITY")
     private int quantity;
 
     public OrderItem() {

@@ -1,28 +1,25 @@
 package orderentry.entities;
 
+import jpa.namingsupport.Alias;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ITEMS")
+@Alias(name = "ITEM")
 public class Item {
 
     @Id
-    @Column(name = "ITEM_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ITEM_ID_GEN")
     @SequenceGenerator(name = "ITEM_ID_GEN", sequenceName = "ITEM_ID_SEQ")
     private Long id;
 
     @Version
-    @Column(name = "ITEM_VERSION")
     private Long version;
 
-    @Basic
-    @Column(name = "ITEM_NAME")
     private String name;
 
-    @Basic
-    @Column(name = "ITEM_PRICE")
     private BigDecimal price;
 
     @ManyToOne

@@ -1,23 +1,22 @@
 package orderentry.entities;
 
+import jpa.namingsupport.Alias;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "CUSTOMERS")
+@Alias(name = "CUST")
 public class Customer {
 
     @Id
-    @Column(name = "CUST_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CUST_ID_GEN")
     @SequenceGenerator(name = "CUST_ID_GEN", sequenceName = "CUST_ID_SEQ")
     private Long id;
 
     @Version
-    @Column(name = "CUST_VERSION")
     private Long version;
 
-    @Basic
-    @Column(name = "CUST_USERNAME")
     private String username;
 
     public Customer() {

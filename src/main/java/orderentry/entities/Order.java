@@ -1,20 +1,21 @@
 package orderentry.entities;
 
+import jpa.namingsupport.Alias;
+
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
 @Table(name = "ORDERS")
+@Alias(name = "ORDR")
 public class Order {
 
     @Id
-    @Column(name = "ORDR_ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDR_ID_GEN")
     @SequenceGenerator(name = "ORDR_ID_GEN", sequenceName = "ORDR_ID_SEQ")
     private Long id;
 
     @Version
-    @Column(name = "ORDR_VERSION")
     private Long version;
 
     @ManyToOne
