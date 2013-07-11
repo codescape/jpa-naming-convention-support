@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-public class CategoryRepositoryTest extends BaseSpringContextTests {
+public class CategoryRepositoryIntegrationTest extends BaseSpringContextTests {
 
     @Autowired
     private CategoryRepository categoryRepository;
