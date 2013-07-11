@@ -12,14 +12,13 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDR_ID_GEN")
-    @SequenceGenerator(name = "ORDR_ID_GEN", sequenceName = "ORDR_ID_SEQ")
+    @SequenceGenerator(name = "ORDR_ID_GEN", sequenceName = "ORDR_ID_SEQ", allocationSize = 1)
     private Long id;
 
     @Version
     private Long version;
 
     @ManyToOne
-    @JoinColumn(name = "ORDR_CUST_ID")
     private Customer customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)

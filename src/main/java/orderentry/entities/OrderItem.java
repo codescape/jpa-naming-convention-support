@@ -12,18 +12,16 @@ public class OrderItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORIT_ID_GEN")
-    @SequenceGenerator(name = "ORIT_ID_GEN", sequenceName = "ORIT_ID_SEQ")
+    @SequenceGenerator(name = "ORIT_ID_GEN", sequenceName = "ORIT_ID_SEQ", allocationSize = 1)
     private Long id;
 
     @Version
     private Long version;
 
     @ManyToOne
-    @JoinColumn(name = "ORIT_ORDR_ID")
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "ORIT_ITEM_ID")
     private Item item;
 
     private int quantity;

@@ -23,7 +23,6 @@ public class Item {
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "ITEM_CTGR_ID")
     private Category category;
 
     public Item() {

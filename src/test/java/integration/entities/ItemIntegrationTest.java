@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertNotNull;
 public class ItemIntegrationTest extends BaseSpringContextTests {
 
     @Test
-    public void shouldBeAbleToSaveItemWithCategory() {
+    public void shouldSaveItemWithCategory() {
         Category category = new Category("name", "description");
         entityManager.persist(category);
 
