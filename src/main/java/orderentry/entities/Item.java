@@ -12,7 +12,7 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ITEM_ID_GEN")
-    @SequenceGenerator(name = "ITEM_ID_GEN", sequenceName = "ITEM_ID_SEQ")
+    @SequenceGenerator(name = "ITEM_ID_GEN", sequenceName = "ITEM_ID_SEQ", allocationSize = 1)
     private Long id;
 
     @Version
