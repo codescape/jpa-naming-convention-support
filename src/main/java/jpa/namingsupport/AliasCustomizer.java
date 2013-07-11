@@ -16,21 +16,21 @@ public class AliasCustomizer implements SessionCustomizer {
         for (Class entityClass : entityClasses.keySet()) {
             Alias aliasAnnotation = (Alias) entityClass.getAnnotation(Alias.class);
             if (aliasAnnotation != null) {
-                rewriteEntity(aliasAnnotation.name(), entityClasses.get(entityClass));
+                customizeEntity(aliasAnnotation.name(), entityClasses.get(entityClass));
             }
         }
     }
 
-    private void rewriteEntity(String alias, ClassDescriptor classDescriptor) {
-        for (DatabaseMapping fieldMapping : classDescriptor.getMappings()) {
-            updateFieldName(alias, fieldMapping);
+    private void customizeEntity(String alias, ClassDescriptor classDescriptor) {
+        for (DatabaseMapping databaseMapping : classDescriptor.getMappings()) {
+            updateFieldName(alias, databaseMapping);
         }
     }
 
-    private void updateFieldName(String alias, DatabaseMapping fieldMapping) {
-        DatabaseField field = fieldMapping.getField();
-        if (field != null) {
-            field.setName(alias + "_" + field.getName());
+    private void updateFieldName(String alias, DatabaseMapping databaseMapping) {
+        if (databaseMapping.getField() != null) {
+            DatabaseField databaseField = databaseMapping.getField();
+            databaseField.setName(alias + "_" + databaseField.getName());
         }
     }
 
