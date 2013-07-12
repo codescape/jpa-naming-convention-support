@@ -16,13 +16,13 @@ public class AliasCustomizer implements SessionCustomizer {
     public void customize(Session session) throws Exception {
         Map<Class, ClassDescriptor> entityClasses = session.getDescriptors();
         for (Class entityClass : entityClasses.keySet()) {
-            if (aliasForClass(entityClass) != null) {
-                customizeEntity(aliasForClass(entityClass), entityClasses.get(entityClass));
+            if (aliasNameForClass(entityClass) != null) {
+                customizeEntity(aliasNameForClass(entityClass), entityClasses.get(entityClass));
             }
         }
     }
 
-    private String aliasForClass(Class entityClass) {
+    private String aliasNameForClass(Class entityClass) {
         Alias aliasAnnotation = (Alias) entityClass.getAnnotation(Alias.class);
         return aliasAnnotation != null ? aliasAnnotation.name() : null;
     }
@@ -35,12 +35,13 @@ public class AliasCustomizer implements SessionCustomizer {
     }
 
     private void updateJoinColumnNames(String alias, DatabaseMapping databaseMapping) {
+        // TODO What mappings do we have to also care about?
         if (databaseMapping instanceof ManyToOneMapping) {
             ManyToOneMapping manyToOneMapping = (ManyToOneMapping) databaseMapping;
             Map<DatabaseField, DatabaseField> sourceToTargetKeyFields = manyToOneMapping.getSourceToTargetKeyFields();
             for (DatabaseField databaseField : sourceToTargetKeyFields.keySet()) {
                 // TODO Do we want to require the referenced class to be annotated with alias, too?
-                databaseField.setName(underscores(alias, aliasForClass(manyToOneMapping.getReferenceClass()), "ID"));
+                databaseField.setName(underscores(alias, aliasNameForClass(manyToOneMapping.getReferenceClass()), "ID"));
             }
         }
     }
