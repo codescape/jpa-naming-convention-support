@@ -9,5 +9,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target(TYPE)
 @Retention(RUNTIME)
 public @interface Alias {
-    String name() default "";
+
+    String name();
+
 }
