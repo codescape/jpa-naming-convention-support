@@ -30,6 +30,6 @@ public abstract class AbstractEntity {
         return version;
     }
 
-    // TODO: implement equals and hashCode with commons.lang builder classes
+    // TODO implement equals and hashCode with commons.lang builder classes
 
 }
