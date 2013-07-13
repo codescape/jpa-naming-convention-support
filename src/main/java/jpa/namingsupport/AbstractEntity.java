@@ -8,6 +8,7 @@ public abstract class AbstractEntity {
 
     @Id
     @Column(name = "ID")
+    // TODO Maybe remove the sequence here and initialize it according to naming conventions by the AliasCustomizer
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CTGR_ID_GEN")
     @SequenceGenerator(name = "CTGR_ID_GEN", sequenceName = "CTGR_ID_SEQ", allocationSize = 1)
     private Long id;
