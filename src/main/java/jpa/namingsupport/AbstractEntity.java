@@ -2,6 +2,7 @@ package jpa.namingsupport;
 
 import javax.persistence.*;
 
+@SuppressWarnings("UnusedDeclaration")
 @MappedSuperclass
 public abstract class AbstractEntity {
 
@@ -11,6 +12,7 @@ public abstract class AbstractEntity {
     private Long id;
 
     @Version
+    @Column(name = "VERSION")
     private Long version;
 
     protected AbstractEntity(Long id, Long version) {
