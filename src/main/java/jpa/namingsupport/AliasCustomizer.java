@@ -4,6 +4,7 @@ import org.eclipse.persistence.config.SessionCustomizer;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
 import org.eclipse.persistence.internal.helper.DatabaseField;
 import org.eclipse.persistence.mappings.DatabaseMapping;
+import org.eclipse.persistence.mappings.DirectToFieldMapping;
 import org.eclipse.persistence.mappings.ManyToOneMapping;
 import org.eclipse.persistence.sessions.Session;
 import org.springframework.util.StringUtils;
@@ -14,42 +15,38 @@ public class AliasCustomizer implements SessionCustomizer {
 
     @Override
     public void customize(Session session) throws Exception {
-        Map<Class, ClassDescriptor> entityClasses = session.getDescriptors();
-        for (Class entityClass : entityClasses.keySet()) {
-            if (aliasNameForClass(entityClass) != null) {
-                customizeEntity(aliasNameForClass(entityClass), entityClasses.get(entityClass));
-            }
+        Map<Class, ClassDescriptor> entities = session.getDescriptors();
+        for (Class entity : entities.keySet()) {
+            customizeEntity(aliasNameFor(entity), entities.get(entity));
         }
     }
 
-    private String aliasNameForClass(Class entityClass) {
-        Alias aliasAnnotation = (Alias) entityClass.getAnnotation(Alias.class);
-        return aliasAnnotation != null ? aliasAnnotation.name() : null;
+    private String aliasNameFor(Class entity) {
+        Alias alias = (Alias) entity.getAnnotation(Alias.class);
+        return alias != null ? alias.name() : null;
     }
 
     private void customizeEntity(String alias, ClassDescriptor classDescriptor) {
         for (DatabaseMapping databaseMapping : classDescriptor.getMappings()) {
-            updateFieldName(alias, databaseMapping);
-            updateJoinColumnNames(alias, databaseMapping);
+            customizeDirectToFieldMapping(alias, databaseMapping);
+            customizeManyToOneMapping(alias, databaseMapping);
+            // TODO add other mappings that need to be customized accordingly
         }
     }
 
-    private void updateJoinColumnNames(String alias, DatabaseMapping databaseMapping) {
-        // TODO What mappings do we have to also care about?
-        if (databaseMapping instanceof ManyToOneMapping) {
-            ManyToOneMapping manyToOneMapping = (ManyToOneMapping) databaseMapping;
-            Map<DatabaseField, DatabaseField> sourceToTargetKeyFields = manyToOneMapping.getSourceToTargetKeyFields();
-            for (DatabaseField databaseField : sourceToTargetKeyFields.keySet()) {
-                // TODO Do we want to require the referenced class to be annotated with alias, too?
-                databaseField.setName(underscores(alias, aliasNameForClass(manyToOneMapping.getReferenceClass()), "ID"));
-            }
-        }
-    }
-
-    private void updateFieldName(String alias, DatabaseMapping databaseMapping) {
-        if (databaseMapping.getField() != null) {
+    private void customizeDirectToFieldMapping(String alias, DatabaseMapping databaseMapping) {
+        if (databaseMapping instanceof DirectToFieldMapping) {
             DatabaseField databaseField = databaseMapping.getField();
             databaseField.setName(underscores(alias, databaseField.getName()));
+        }
+    }
+
+    private void customizeManyToOneMapping(String alias, DatabaseMapping databaseMapping) {
+        if (databaseMapping instanceof ManyToOneMapping) {
+            ManyToOneMapping mapping = (ManyToOneMapping) databaseMapping;
+            for (DatabaseField databaseField : mapping.getSourceToTargetKeyFields().keySet()) {
+                databaseField.setName(underscores(alias, aliasNameFor(mapping.getReferenceClass()), "ID"));
+            }
         }
     }
 
