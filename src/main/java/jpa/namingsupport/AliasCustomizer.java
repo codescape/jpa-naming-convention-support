@@ -6,6 +6,7 @@ import org.eclipse.persistence.internal.helper.DatabaseField;
 import org.eclipse.persistence.mappings.DatabaseMapping;
 import org.eclipse.persistence.mappings.DirectToFieldMapping;
 import org.eclipse.persistence.mappings.ManyToOneMapping;
+import org.eclipse.persistence.sequencing.NativeSequence;
 import org.eclipse.persistence.sessions.Session;
 import org.springframework.util.StringUtils;
 
@@ -17,7 +18,7 @@ public class AliasCustomizer implements SessionCustomizer {
     public void customize(Session session) throws Exception {
         Map<Class, ClassDescriptor> entities = session.getDescriptors();
         for (Class entity : entities.keySet()) {
-            customizeEntity(aliasNameFor(entity), entities.get(entity));
+            customizeEntity(aliasNameFor(entity), entities.get(entity), session);
         }
     }
 
@@ -26,12 +27,20 @@ public class AliasCustomizer implements SessionCustomizer {
         return alias != null ? alias.name() : null;
     }
 
-    private void customizeEntity(String alias, ClassDescriptor classDescriptor) {
+    private void customizeEntity(String alias, ClassDescriptor classDescriptor, Session session) {
+        customizeSequence(alias, classDescriptor, session);
         for (DatabaseMapping databaseMapping : classDescriptor.getMappings()) {
             customizeDirectToFieldMapping(alias, databaseMapping);
             customizeManyToOneMapping(alias, databaseMapping);
             // TODO add other mappings that need to be customized accordingly
         }
+    }
+
+    private void customizeSequence(String alias, ClassDescriptor classDescriptor, Session session) {
+        NativeSequence sequence = new NativeSequence(underscores(alias, "ID", "SEQ"), 1, false);
+        session.getLogin().addSequence(sequence);
+        classDescriptor.setSequenceNumberName(sequence.getName());
+        classDescriptor.setSequenceNumberField(classDescriptor.getPrimaryKeyFields().get(0));
     }
 
     private void customizeDirectToFieldMapping(String alias, DatabaseMapping databaseMapping) {

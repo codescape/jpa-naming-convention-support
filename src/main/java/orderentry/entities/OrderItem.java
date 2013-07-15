@@ -1,22 +1,16 @@
 package orderentry.entities;
 
+import jpa.namingsupport.AbstractEntity;
 import jpa.namingsupport.Alias;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "ORDER_ITEMS")
 @Alias(name = "ORIT")
-public class OrderItem implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORIT_ID_GEN")
-    @SequenceGenerator(name = "ORIT_ID_GEN", sequenceName = "ORIT_ID_SEQ", allocationSize = 1)
-    private Long id;
-
-    @Version
-    private Long version;
+public class OrderItem extends AbstractEntity {
 
     @ManyToOne
     private Order order;
@@ -31,16 +25,13 @@ public class OrderItem implements Serializable {
     }
 
     public OrderItem(Item item, int quantity) {
-        setItem(item);
-        setQuantity(quantity);
+        this(null, null, item, quantity);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Long getVersion() {
-        return version;
+    public OrderItem(Long id, Long version, Item item, int quantity) {
+        super(id, version);
+        this.item = item;
+        this.quantity = quantity;
     }
 
     public Item getItem() {

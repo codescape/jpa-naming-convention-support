@@ -1,22 +1,17 @@
 package orderentry.entities;
 
+import jpa.namingsupport.AbstractEntity;
 import jpa.namingsupport.Alias;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ITEMS")
 @Alias(name = "ITEM")
-public class Item {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ITEM_ID_GEN")
-    @SequenceGenerator(name = "ITEM_ID_GEN", sequenceName = "ITEM_ID_SEQ", allocationSize = 1)
-    private Long id;
-
-    @Version
-    private Long version;
+public class Item extends AbstractEntity {
 
     private String name;
 
@@ -30,17 +25,14 @@ public class Item {
     }
 
     public Item(String name, BigDecimal price, Category category) {
+        this(null, null, name, price, category);
+    }
+
+    public Item(Long id, Long version, String name, BigDecimal price, Category category) {
+        super(id, version);
         this.name = name;
         this.price = price;
         this.category = category;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Long getVersion() {
-        return version;
     }
 
     public String getName() {

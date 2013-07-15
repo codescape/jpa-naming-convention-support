@@ -1,22 +1,17 @@
 package orderentry.entities;
 
+import jpa.namingsupport.AbstractEntity;
 import jpa.namingsupport.Alias;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
 @Alias(name = "ORDR")
-public class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDR_ID_GEN")
-    @SequenceGenerator(name = "ORDR_ID_GEN", sequenceName = "ORDR_ID_SEQ", allocationSize = 1)
-    private Long id;
-
-    @Version
-    private Long version;
+public class Order extends AbstractEntity {
 
     @ManyToOne
     private Customer customer;
@@ -29,16 +24,14 @@ public class Order {
     }
 
     public Order(Customer customer) {
-        setCustomer(customer);
+        this(null, null, customer);
     }
 
-    public Long getId() {
-        return id;
+    public Order(Long id, Long version, Customer customer) {
+        super(id, version);
+        this.customer = customer;
     }
 
-    public Long getVersion() {
-        return version;
-    }
 
     public Customer getCustomer() {
         return customer;

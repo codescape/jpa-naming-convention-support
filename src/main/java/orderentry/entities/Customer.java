@@ -1,21 +1,15 @@
 package orderentry.entities;
 
+import jpa.namingsupport.AbstractEntity;
 import jpa.namingsupport.Alias;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "CUSTOMERS")
 @Alias(name = "CUST")
-public class Customer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CUST_ID_GEN")
-    @SequenceGenerator(name = "CUST_ID_GEN", sequenceName = "CUST_ID_SEQ", allocationSize = 1)
-    private Long id;
-
-    @Version
-    private Long version;
+public class Customer extends AbstractEntity {
 
     private String username;
 
@@ -24,15 +18,12 @@ public class Customer {
     }
 
     public Customer(String username) {
+        this(null, null, username);
+    }
+
+    public Customer(Long id, Long version, String username) {
+        super(id, version);
         this.username = username;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Long getVersion() {
-        return version;
     }
 
     public String getUsername() {
