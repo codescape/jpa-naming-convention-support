@@ -1,4 +1,4 @@
-# JPA Naming Conventions Support [![Build Status](https://travis-ci.org/stefanscheidt/jpa-naming-convention-support.png)](https://travis-ci.org/stefanscheidt/jpa-naming-convention-support)
+# JPA Naming Convention Support [![Build Status](https://travis-ci.org/stefanscheidt/jpa-naming-convention-support.png)](https://travis-ci.org/stefanscheidt/jpa-naming-convention-support)
 
 This project aims to provide support for a custom naming convention for database artifacts. The following naming conventions apply:
 
