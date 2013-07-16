@@ -4,7 +4,7 @@ This project aims to provide support for a custom naming convention for database
 
 * tables have a four letter alias name, eg. `item`
 * fields are prefixed with the alias name, eg. `item_id`
-* sequences are prefixed with the alias name and reference the id field, eg. `alias_id_seq`
+* sequences are prefixed with the alias name and reference the id field, eg. `item_id_seq`
 * foreign keys are prefixed with the alias name and include the referenced table alias, eg. `item_ordr_id`
 
 ### Requirements
