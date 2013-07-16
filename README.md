@@ -1,16 +1,19 @@
-[![Build Status](https://travis-ci.org/stefanscheidt/jpa-naming-convention-support.png)](https://travis-ci.org/stefanscheidt/jpa-naming-convention-support)
+# JPA Naming Conventions Support [![Build Status](https://travis-ci.org/stefanscheidt/jpa-naming-convention-support.png)](https://travis-ci.org/stefanscheidt/jpa-naming-convention-support)
 
-# JPA Support for specific DB naming conventions
+This project aims to provide support for a custom naming convention for database artifacts. The following naming conventions apply:
 
-_TODO:_ Add description.
+* tables have a four letter alias name, eg. `item`
+* fields are prefixed with the alias name, eg. `item_id`
+* sequences are prefixed with the alias name and reference the id field, eg. `alias_id_seq`
+* foreign keys are prefixed with the alias name and include the referenced table alias, eg. `item_ordr_id`
 
-## Requirements
+### Requirements
 
-*   Java 1.7
-*   Maven 3.0.5
+* Java 1.7
+* Maven 3.0.5
 
-## Build
+### Build
 
-*   Build with unit tests: `mvn clean verify`
-*   Build with unit and integration tests: `mvn clean verify -Pintegration`. Will start and stop H2 database using port 9092.
-*   Start database for development: `start-db`.
+* Build with unit tests: `mvn clean verify`
+* Build with unit and integration tests: `mvn clean verify -Pintegration`. This starts and stop H2 database using port 9092.
+* Start database for development: `./start-db.sh` or `start-db.bat`.
