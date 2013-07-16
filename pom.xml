@@ -7,7 +7,6 @@
     <groupId>com.opitzconsulting</groupId>
     <artifactId>jpa-naming-convention-support</artifactId>
     <version>0.1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
 
     <prerequisites>
         <maven>3.0.5</maven>
